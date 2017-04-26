@@ -1,0 +1,35 @@
+body{
+
+    margin:0;
+    padding:0;
+    background-image: url('images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.body{
+
+    background-color: white;
+    margin-top: 10%;
+
+}
+
+#price-filter , #brand-filter{
+
+       border-radius: 2px;
+    border: 3px solid #aeaeea;
+    padding: 3%;
+}
+
+
+.item{
+
+    height:75%;
+    margin-bottom: 4%;
+}
+
+.item .thumbnail{
+    position: relative;
+    height:100%;
+}
