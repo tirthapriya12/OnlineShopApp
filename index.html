@@ -12,6 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
 
 
 </head>
@@ -73,67 +74,79 @@
         <!--display body-->
         <section class="container-fluid body">
 
-            <section class="left-container col-md-3" style="margin-top: 2%;">
+            <section class="left-container container-fluid col-md-3" style="margin-top: 2%;">
 
 
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Filters</h3>
-                    </div>
-                    <div class="panel-body">
-
-                        <!--filter by price-->
-                        <button class="btn btn-danger" data-toggle="collapse" data-target="#price-filter">By Price</button>
-
-                        <div id="price-filter" class="collapse">
-                            <input type='radio' name="filter" value="<1000" ng-model="price">
-                            < 1000 <br/>
-                            <input type='radio' name="filter" value="1000-5000" ng-model="price" > 1000-5000
-                            <br/>
-                            <input type="radio" name="filter" value="5000 >" ng-model="price" > 5000 >
+                <div class="col-md-10 col-sm-5 col-xs-12">
+                    <div class="panel panel-danger ">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filters</h3>
                         </div>
-                        <!--filter by brand-->
-                        <br/><br/>
-                        <button class="btn btn-danger" data-toggle="collapse" data-target="#brand-filter">By Brand</button>
+                        <div class="panel-body">
 
-                        <div id="brand-filter" class="collapse">
-                            <input type='checkbox' name="filter-brand1" value="Micromax" ng-model="brand['Micromax']"> Micromax
-                            <br/>
-                            <input type='checkbox' name="filter-brand2" value="Samsung" ng-model="brand['Samsung']"> Samsung
-                            <br/>
-                            <input type="checkbox" name="filter-brand3" value="Alcatel" ng-model="brand['Alcatel']"> Alcatel
-                            <br/>
-                            <input type="checkbox" name="filter-brand4" value="Nokia" ng-model="brand['Nokia']"> Nokia
-                            <br/>
-                            <input type="checkbox" name="filter-brand5" value="LG" ng-model="brand['LG']"> LG
+                            <!--filter by price-->
+                            <button class="btn btn-danger" data-toggle="collapse" data-target="#price-filter">By Price</button>
 
+                            <div id="price-filter" class="collapse">
+                                <input type='radio' name="filter" value="<1000" ng-model="price">
+                                < 1000 <br/>
+                                <input type='radio' name="filter" value="1000-5000" ng-model="price"> 1000-5000
+                                <br/>
+                                <input type="radio" name="filter" value="5000 >" ng-model="price"> 5000 >
+                            </div>
+                            <!--filter by brand-->
+                            <br/><br/>
+                            <button class="btn btn-danger" data-toggle="collapse" data-target="#brand-filter">By Brand</button>
+
+                            <div id="brand-filter" class="collapse">
+                                <input type='checkbox' name="filter-brand1" value="Micromax" ng-model="brand['Micromax']">                                Micromax
+                                <br/>
+                                <input type='checkbox' name="filter-brand2" value="Samsung" ng-model="brand['Samsung']">                                Samsung
+                                <br/>
+                                <input type="checkbox" name="filter-brand3" value="Alcatel" ng-model="brand['Alcatel']">                                Alcatel
+                                <br/>
+                                <input type="checkbox" name="filter-brand4" value="Nokia" ng-model="brand['Nokia']"> Nokia
+                                <br/>
+                                <input type="checkbox" name="filter-brand5" value="LG" ng-model="brand['LG']"> LG
+
+                            </div>
                         </div>
                     </div>
                 </div>
 
-
-
+                <div class="col-md-10 col-sm-6 col-xs-12" style="height:inherit">
+                    <div class="panel panel-danger ">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Cart</h3>
+                        </div>
+                        <div class="panel-body">
+                            <button class="btn btn-success">Checkout</button>
+                            <br/> Item: {{getCount()}}
+                        </div>
+                    </div>
+                </div>
 
 
             </section>
 
 
-            <section class="main-body col-md-6" style="margin-top: 2%;" ng-cloak>
+            <section ui-view class="main-body col-md-9" style="margin-top: 2%;" >
 
-                <div  class="col-sm-6 col-md-4 item" ng-repeat="item in Product | FilterByName:searchText | FilterByPrice:price | FilterByBrand: brand">
-                    <div class="thumbnail">
-                        <img  alt="" src='images/noimg1.jpg' ng-src="{{item.productBaseInfo.productAttributes.imageUrls['275x275']}}" >
-                            <div class="caption">
-                                <h4>{{item.productBaseInfo.productAttributes.title}}</h4>
-                                <p>Price: {{item.productBaseInfo.productAttributes.sellingPrice.amount | currency: "Rs " }}</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Buy</a></p>
-                            </div>
+                <div style="border:1px solid #eee; margin:2% " class="col-sm-5 col-md-3 item" ng-repeat="item in Product | FilterByName:searchText | FilterByPrice:price | FilterByBrand: brand">
+                    <div class="thumbnail-img">
+                        <img alt="" class=" img-responsive" src='images/noimg1.jpg' ng-src="{{item.productBaseInfo.productAttributes.imageUrls['275x275']}}">
+                        <div class="caption">
+                            <h4>{{item.productBaseInfo.productAttributes.title}}</h4>
+                            
+                        </div>
+                        <p>Price: {{item.productBaseInfo.productAttributes.sellingPrice.amount | currency: "Rs " }}</p>
+                            <p style="margin-bottom:2%"><a href="#" ui-sref="desc(sendItem(item))" class="btn btn-primary" role="button">View</a></p>
                     </div>
                 </div>
-               
+
             </section>
             <!-- right container-->
-            <section class="right-container col-md-2" style="margin-top: 2%;">
+            <!--<section class="right-container col-md-2" style="margin-top: 2%;">
 
                 <div class="panel panel-danger">
                     <div class="panel-heading">
@@ -141,18 +154,20 @@
                     </div>
                     <div class="panel-body">
                             <button class="btn btn-success">Checkout</button>
+                            <br/>
+                            Item: {{getCount()}}
                     </div>
                 </div>
 
-            </section>
+            </section>-->
         </section>
         <!--end of display body-->
     </div>
 
-    
+
     <script src="script.js"></script>
     <script src="serviceCall.js"></script>
-    
+
 </body>
 
 

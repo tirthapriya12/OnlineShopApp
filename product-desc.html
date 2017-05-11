@@ -1,0 +1,29 @@
+<section class="container">
+
+   <section class="col-md-2">
+
+          <div class="thumbnail">
+                        <img  alt="" src='images/noimg1.jpg' ng-src="{{item.productBaseInfo.productAttributes.imageUrls['275x275']}}" >
+                            <div class="caption">
+                                <h4>{{item.productBaseInfo.productAttributes.title}}</h4>
+                                <p>Price: {{item.productBaseInfo.productAttributes.sellingPrice.amount | currency: "Rs " }}</p>
+                                <p><a class="btn btn-primary" ng-click="addToCart(item)"  role="button">Add to Cart</a></p>
+                            </div>
+                    </div>
+
+   </section>
+   <section class="col-md-3">
+                   
+                <p>Brand:  {{item.productBaseInfo.productAttributes.productBrand}}</p> <!--Brand-->
+                <br/>
+                Description:<br/>
+                {{item.productBaseInfo.productAttributes.productDescription}}  <!-- description -->
+                <br/>
+               
+                <p> Color:{{item.productBaseInfo.productAttributes.color}}</p><!-- color-->
+
+   </section>
+    
+    
+
+</section>

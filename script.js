@@ -1,15 +1,16 @@
 var OnlineShopApp;
 
 var dataURL = "data/data.json";
-OnlineShopApp = angular.module('OnlineShop', []);
+OnlineShopApp = angular.module('OnlineShop', ['ui.router']);
 
 
-OnlineShopApp.controller('HomeCtrl', ['$scope', 'FetchData', function ($scope, FetchData) {
+OnlineShopApp.controller('HomeCtrl', ['$scope', 'FetchData','CatchItem','Cart', function ($scope, FetchData , CatchItem,Cart) {
 
     //  $scope.brand=[];
 
     FetchData.getData().success(function (data) {
         $scope.Product = data.productInfoList;
+        
     }); //gets all the data on page load
 
 
@@ -17,6 +18,31 @@ OnlineShopApp.controller('HomeCtrl', ['$scope', 'FetchData', function ($scope, F
 
 
     // });
+    // $scope.getCurrentItem=function(item)
+    // {
+    //         $scope.item=item;
+    // };
+
+
+      $scope.sendItem=function(item){
+           
+            // $scope.itemId= obj
+            
+            return {
+                itemid:item.productBaseInfo.productAttributes.productUrl.split('?pid=')[1].split('&')[0],
+                title: item.productBaseInfo.productAttributes.title
+            };
+
+      };  //sets item name and productid in urlparams 
+
+
+
+      $scope.getCount = function() {
+            
+          
+          return Cart.getItemCount();
+      } //shows items in cart
+
 
 }]);
 
@@ -158,5 +184,58 @@ OnlineShopApp.filter('FilterByBrand', function () {
 
     }
 
+
+});
+
+OnlineShopApp.controller('DescViewCtrl',['$scope','CatchItem','Cart','$stateParams', 'FetchData', function ($scope, CatchItem, Cart, $stateParams, FetchData) {
+
+    
+
+    FetchData.getData().success(function (data) {
+        
+        $scope.Product = data.productInfoList;
+    
+    }); 
+
+   $scope.item=CatchItem.getThisItem($stateParams.itemid,$scope.Product); //get the required item for corresponding productid
+      
+      
+      $scope.addToCart=function(obj){
+                  
+                    Cart.setItem(obj);
+   
+
+      };
+
+
+ 
+
+}]);
+
+OnlineShopApp.config(function($stateProvider,$urlRouterProvider){
+//console.log($scope.Product.productBaseInfo.productAttributes.productUrl.split('?pid=')[1]);
+ var home={
+    name:'home',
+    url:'/home',
+    constroller: 'HomeCtrl',
+   
+
+
+ };
+
+  var desc={
+     
+     name:'desc',
+     url:'/desc/:itemid/:title',
+     templateUrl:'product-desc.html',
+     controller: 'DescViewCtrl',
+     
+    
+
+  };
+
+   $stateProvider.state(desc);
+   $stateProvider.state(home);
+   $urlRouterProvider.otherwise("/home");
 
 });
