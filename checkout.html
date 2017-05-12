@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Your cart Items</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{getCount()}} Items </p>
+                        
+                    <div class="media" ng-repeat="item in getCartItems() track by $index">
+                        <div class="media-left">
+                            <img src="images/noimg1.jpg" ng-src="{{item.productBaseInfo.productAttributes.imageUrls['275x275']}}" class="media-object" style="width:45px">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{item.productBaseInfo.productAttributes.title}}   </h4>
+                            <p><strong>Price: </strong> {{item.productBaseInfo.productAttributes.sellingPrice.amount | currency: "Rs " }} </p>
+                        </div>
+                    </div>
+
+
+
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
